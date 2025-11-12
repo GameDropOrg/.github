@@ -1,2 +1,3 @@
-# .github
-The meta repository for the GameDropOrg
+# Meta repository for the GameDropOrg
+
+Here are all special resources for the whole org.

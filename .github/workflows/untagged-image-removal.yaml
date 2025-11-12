@@ -1,0 +1,33 @@
+name: Remove all untagged images from all packages
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 23 * * *'
+
+jobs:
+  build:
+    name: Remove all untagged images from the org packages
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: 🧹 Delete all untagged images
+        id: deleted-action
+        uses: Chizkiyahu/delete-untagged-ghcr-action@main
+        env:
+          ACTIONS_STEP_DEBUG: true
+        with:
+          token: ${{ secrets.IMAGE_REMOVAL_TOKEN }}
+          repository_owner: ${{ github.repository_owner }}
+          untagged_only: true
+          owner_type: org
+          except_untagged_multiplatform: true
+          # Remove images of all repositories of the organization
+          repository: ''
+
+      - name: Output cleaned up images
+        run: |
+          echo "## :wastebasket: Summary" >> $GITHUB_STEP_SUMMARY
+          echo 'Deleted images count: <strong>${{ steps.deleted-action.outputs.num_deleted }}</strong>' >> $GITHUB_STEP_SUMMARY
