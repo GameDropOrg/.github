@@ -14,4 +14,5 @@
 ## Requirements to get Pull Requests accepted
 
 * Passes the build (Including all GitHub action checks and others...)
+* A category of your change (will be assigned by the reviewer)
 * Review from a maintainter
